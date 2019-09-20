@@ -46,7 +46,7 @@ class Form extends Component {
           value={code}
           onChange={this.handleChange}
         />
-        <button type="submit">Submit</button>
+        <button type="submit">Add city</button>
       </form>
     );
   }
