@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Table from "./city/Table";
-import Form from "./city/Form";
+import CityForm from "./city/CityForm";
 import { Container, Row } from "react-bootstrap";
 
 class App extends Component {
@@ -30,8 +30,7 @@ class App extends Component {
       <Container>
         <Row><h1>City List</h1></Row>
         <Row><p>Add a city with a name and country code to the table.</p></Row>
-        <Row><h3>Add New</h3></Row>
-        <Form handleSubmit={this.handleSubmit} />
+        <CityForm handleSubmit={this.handleSubmit} />
         <br></br>
         <Table cityData={data} removeCity={this.removeCity} />
       </Container>
