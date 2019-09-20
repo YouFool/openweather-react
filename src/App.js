@@ -35,7 +35,7 @@ class App extends Component {
           <p>Add a city with a name and country code to the table.</p>
         </Row>
         <CityForm handleSubmit={this.handleSubmit} />
-        <br/>
+        <br />
         <CityTable cityData={data} removeCity={this.removeCity} />
       </Container>
     );
