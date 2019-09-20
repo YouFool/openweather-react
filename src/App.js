@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Table from "./city/Table";
+import CityTable from "./city/CityTable";
 import CityForm from "./city/CityForm";
 import { Container, Row } from "react-bootstrap";
 
@@ -28,11 +28,15 @@ class App extends Component {
 
     return (
       <Container>
-        <Row><h1>City List</h1></Row>
-        <Row><p>Add a city with a name and country code to the table.</p></Row>
+        <Row>
+          <h1>City List</h1>
+        </Row>
+        <Row>
+          <p>Add a city with a name and country code to the table.</p>
+        </Row>
         <CityForm handleSubmit={this.handleSubmit} />
-        <br></br>
-        <Table cityData={data} removeCity={this.removeCity} />
+        <br/>
+        <CityTable cityData={data} removeCity={this.removeCity} />
       </Container>
     );
   }

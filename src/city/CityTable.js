@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Table from "react-bootstrap/Table";
 
 const TableHeader = () => {
   return (
@@ -28,17 +29,17 @@ const TableBody = props => {
   return <tbody>{rows}</tbody>;
 };
 
-class Table extends Component {
+class CityTable extends Component {
   render() {
     const { cityData, removeCity } = this.props;
 
     return (
-      <table>
+      <Table hover="true">
         <TableHeader />
         <TableBody cityData={cityData} removeCity={removeCity} />
-      </table>
+      </Table>
     );
   }
 }
 
-export default Table;
+export default CityTable;
