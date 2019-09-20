@@ -1,55 +1,55 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 
 class Form extends Component {
-    constructor(props) {
-        super(props);
-        
-        this.initialState = {
-            name: '',
-            countryCode: 'BR'
-        };
+  constructor(props) {
+    super(props);
 
-        this.state = this.initialState;
-    }
+    this.initialState = {
+      name: "",
+      countryCode: ""
+    };
 
-    handleChange = event => {
-        const { name, value } = event.target;
+    this.state = this.initialState;
+  }
 
-        this.setState({
-            [name] : value
-        });
-    }
+  handleChange = event => {
+    const { name, value } = event.target;
 
-    onFormSubmit = (event) => {
-        event.preventDefault();
-        
-        this.props.handleSubmit(this.state);
-        this.setState(this.initialState);
-    }
+    this.setState({
+      [name]: value
+    });
+  };
 
-    render() {
-        const { name: cityName, country: countryCode } = this.state; 
+  onFormSubmit = event => {
+    event.preventDefault();
 
-        return (
-            <form onSubmit={this.onFormSubmit}>
-                <label>Name</label>
-                <input 
-                    type="text" 
-                    name="name" 
-                    value={cityName} 
-                    onChange={this.handleChange} />
-                <label>Country</label>
-                <input 
-                    type="text" 
-                    name="country" 
-                    value={countryCode} 
-                    onChange={this.handleChange} />
-                <button type="submit">
-                    Submit
-                </button>
-            </form>
-        );
-    }
+    this.props.handleSubmit(this.state);
+    this.setState(this.initialState);
+  };
+
+  render() {
+    const { name: cityName, countryCode: code } = this.state;
+
+    return (
+      <form onSubmit={this.onFormSubmit}>
+        <label>Name</label>
+        <input
+          type="text"
+          name="name"
+          value={cityName}
+          onChange={this.handleChange}
+        />
+        <label>Country</label>
+        <input
+          type="text"
+          name="countryCode"
+          value={code}
+          onChange={this.handleChange}
+        />
+        <button type="submit">Submit</button>
+      </form>
+    );
+  }
 }
 
 export default Form;
