@@ -25,6 +25,7 @@ class FiveDayForecast extends Component {
   }
 
   render() {
+    //TODO: insert a <Forecast> component inside each <Col>
     return (
       <Container>
         <Row>

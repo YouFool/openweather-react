@@ -8,6 +8,19 @@ class App extends Component {
     cities: []
   };
 
+  componentDidMount() {
+    const cityListUrl = "http://localhost:8086/city";
+
+    fetch(cityListUrl)
+      .then(result => result.json())
+      .then(result => {
+        this.setState({
+          cities: result
+        });
+      })
+      .catch(console.log);
+  }
+
   removeCity = id => {
     const { cities: data } = this.state;
     debugger;
