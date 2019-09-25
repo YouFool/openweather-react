@@ -9,9 +9,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    const cityListUrl = "http://localhost:8086/city";
-
-    fetch(cityListUrl)
+    fetch("http://localhost:8086/city")
       .then(result => result.json())
       .then(result => {
         this.setState({
@@ -23,17 +21,41 @@ class App extends Component {
 
   removeCity = id => {
     const { cities: data } = this.state;
-    debugger;
 
-    this.setState({
-      data: data.filter(city => {
-        return city.id !== id;
+    fetch("http://localhost:8086/city/" + id, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(apply => {
+        this.setState({
+          cities: data.filter(city => {
+            return city.id !== id;
+          })
+        });
       })
-    });
+      .catch(console.log);
   };
 
   handleSubmit = city => {
-    this.setState({ cities: [...this.state.cities, city] });
+    fetch("http://localhost:8086/city", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: city.name,
+        countryCode: city.countryCode
+      })
+    })
+      .then(result => result.json())
+      .then(resultCity => {
+        this.setState({ cities: [...this.state.cities, resultCity] });
+      })
+      .catch(console.log);
   };
 
   render() {
