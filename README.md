@@ -2,23 +2,23 @@
 
 Este projeto foi criado via [Create React App](https://github.com/facebook/create-react-app).
 
-## Objetivo
+### Objetivo
 Desenvolver uma aplicação WEB que permite cadastrar cidade e exibir a previsão do
 tempo.
 
-## Especificação
+### Especificação
 * Tela de cadastro de cidade e listagem das cidades cadastradas: Permitir o usuário
 cadastrar somente cidades validas na API
 * Na listagem de cidades deve ter um link para visualizar os detalhes da previsão
 * Tela de detalhe das previsões: Exibe um “forecast” de 5 dias para a cidade
 Selecionada.
 
-## Requerimentos específicos
+### Requerimentos específicos
 * Desenvolver telas em HTML (pode ser usado frameworks)
 
 ---
 
-## Stack
+### Stack
 * HTML
 * CSS
 * JavaScript 8
@@ -27,7 +27,7 @@ Selecionada.
 * [React-Bootstrap](https://react-bootstrap.netlify.com/) - Componentes *bootsrap-like* para agilizar o desenvolvimento
 
 
-## Get started
+### Get started
 Você deve possuir o NodeJS instalado em sua máquina
 
 * Primeiramente, configure e execute o [back-end](https://github.com/YouFool/openweather-api) da aplicação
