@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Table from "react-bootstrap/Table";
+import { Table } from "react-bootstrap";
 
 const TableHeader = () => {
   return (
@@ -16,7 +16,8 @@ const TableHeader = () => {
 const TableBody = props => {
   const rows = props.cityData.map(city => {
     return (
-      <tr key={city.id}>
+      // <tr key={city.id} onClick={() => props.getCityWeather(city.id)}>
+      <tr key={city.id} onClick={() => props.getCityWeather(city.id)}>
         <td>{city.name}</td>
         <td>{city.countryCode}</td>
         <td>

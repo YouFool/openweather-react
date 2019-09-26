@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import CityTable from "./city/CityTable";
 import CityForm from "./city/CityForm";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Toast} from "react-bootstrap";
 
 class App extends Component {
   state = {
-    cities: []
+    cities: [],
+    weatherData: []
   };
 
   componentDidMount() {
@@ -17,6 +18,35 @@ class App extends Component {
         });
       })
       .catch(console.log);
+  }
+
+  getCityWeather = cityId => {
+    fetch("http://localhost:8086/weather/city/" + cityId, {
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(result => result.json())
+      .then(weatherData => {
+        return (
+          <Toast>
+          <Toast.Header>
+            <p>Temperature is</p>
+          </Toast.Header>
+          <Toast.Body>
+            <p>Temperature: {this.toCelsius(weatherData.cityStats.temperature)}</p>
+            <p>Maximum temperature: {this.toCelsius(weatherData.cityStats.maximumTemperature)}</p>
+            <p>Minimum temperature: {this.toCelsius(weatherData.cityStats.minimumTemperature)}</p>
+          </Toast.Body>
+        </Toast>
+        );
+      })
+      .catch(console.log);
+  };
+  
+  toCelsius = number => {
+    return number + "°C";
   }
 
   removeCity = id => {
@@ -71,7 +101,7 @@ class App extends Component {
         </Row>
         <CityForm handleSubmit={this.handleSubmit} />
         <br />
-        <CityTable cityData={data} removeCity={this.removeCity} />
+        <CityTable cityData={data} removeCity={this.removeCity} onClick={this.getCityWeather}/>
       </Container>
     );
   }
