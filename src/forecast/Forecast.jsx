@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Container, Col, Row } from "react-bootstrap";
 
-const Forecast = () => {
+// const Forecast = () => {
   //TODO: deals with API data
-  return "";
-};
+  // return "";
+// };
 
-class FiveDayForecast extends Component {
+class Forecast extends Component {
   constructor(props) {
     super(props);
     this.state = { forecast: [] };
@@ -40,4 +40,4 @@ class FiveDayForecast extends Component {
   }
 }
 
-export default FiveDayForecast;
+export default Forecast;
