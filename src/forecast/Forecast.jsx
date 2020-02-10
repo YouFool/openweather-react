@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Container, Col, Row } from "react-bootstrap";
 
 // const Forecast = () => {
-  //TODO: deals with API data
-  // return "";
+//TODO: deals with API data
+// return "";
 // };
 
 class Forecast extends Component {

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Row, Toast } from "react-bootstrap";
 import CityForm from "./CityForm";
 import CityTable from "./CityTable";
+import { get, remove, post } from "../common/apiService";
 
 class CityPage extends Component {
   constructor() {
@@ -13,94 +14,69 @@ class CityPage extends Component {
   }
 
   componentDidMount() {
-      this.listCities();
+    this.listCities();
   }
-  
-  listCities() {
-    fetch("http://localhost:8086/city")
-    .then(result => result.json())
-    .then(result => {
+
+  listCities = async () => {
+    const result = await get("http://localhost:8086/city");
+    if (result) {
       this.setState({
         cities: result
       });
-    })
-    .catch(console.log);
-  }
+    }
+  };
 
-  getCityWeather = cityId => {
-    fetch("http://localhost:8086/weather/city/" + cityId, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    })
-      .then(result => result.json())
-      .then(weatherData => {
-        return (
-          <Toast>
-            <Toast.Header>
-              <p>Temperature is</p>
-            </Toast.Header>
-            <Toast.Body>
-              <p>
-                Temperature: {this.toCelsius(weatherData.cityStats.temperature)}
-              </p>
-              <p>
-                Maximum temperature:{" "}
-                {this.toCelsius(weatherData.cityStats.maximumTemperature)}
-              </p>
-              <p>
-                Minimum temperature:{" "}
-                {this.toCelsius(weatherData.cityStats.minimumTemperature)}
-              </p>
-            </Toast.Body>
-          </Toast>
-        );
-      })
-      .catch(console.log);
+  getCityWeather = async cityId => {
+    const weatherData = await get(
+      "http://localhost:8086/weather/city/" + cityId
+    );
+    return (
+      <Toast>
+        <Toast.Header>
+          <p>Temperature is</p>
+        </Toast.Header>
+        <Toast.Body>
+          <p>
+            Temperature: {this.toCelsius(weatherData.cityStats.temperature)}
+          </p>
+          <p>
+            Maximum temperature:{" "}
+            {this.toCelsius(weatherData.cityStats.maximumTemperature)}
+          </p>
+          <p>
+            Minimum temperature:{" "}
+            {this.toCelsius(weatherData.cityStats.minimumTemperature)}
+          </p>
+        </Toast.Body>
+      </Toast>
+    );
   };
 
   toCelsius = number => {
     return number + "°C";
   };
 
-  removeCity = id => {
+  removeCity = async id => {
     const { cities: data } = this.state;
+    await remove("http://localhost:8086/city/" + id);
 
-    fetch("http://localhost:8086/city/" + id, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    })
-      .then(() => {
-        this.setState({
-          cities: data.filter(city => {
-            return city.id !== id;
-          })
-        });
+    this.setState({
+      cities: data.filter(city => {
+        return city.id !== id;
       })
-      .catch(console.log);
+    });
   };
 
-  handleSubmit = city => {
-    fetch("http://localhost:8086/city", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name: city.name,
-        countryCode: city.countryCode
-      })
-    })
-      .then(result => result.json())
-      .then(resultCity => {
-        this.setState({ cities: [...this.state.cities, resultCity] });
-      })
-      .catch(console.log);
+  handleSubmit = async city => {
+    const body = {
+      name: city.name,
+      countryCode: city.countryCode
+    };
+    const result = await post("http://localhost:8086/city", body);
+
+    if (result) {
+      this.setState({ cities: [...this.state.cities, result] });
+    }
   };
 
   render() {
