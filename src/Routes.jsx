@@ -1,7 +1,7 @@
-import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CityPage from "./city/CityPage";
 import React from "react";
-import Forecast from "./forecast/Forecast";
+import Forecast from "./pages/forecast/Forecast";
 
 export default () => (
   <Router>
