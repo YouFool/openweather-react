@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Container, Row, Toast } from "react-bootstrap";
-import CityForm from "./CityForm";
-import CityTable from "./CityTable";
-import { get, remove, post } from "../common/apiService";
+import CityForm from "./components/CityForm";
+import CityTable from "./components/CityTable";
+import { get, remove, post } from "../../common/apiService";
 
 class CityPage extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       cities: [],
       weatherData: []
