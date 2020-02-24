@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Container, Row, Toast } from "react-bootstrap";
+import React, {Component} from "react";
+import {Container, Row} from "react-bootstrap";
 import CityForm from "./components/CityForm";
 import CityTable from "./components/CityTable";
-import { get, remove, post } from "../../common/apiService";
+import {CREATE_CITY, LIST_CITIES, REMOVE_CITY} from "./cityService";
 
 class CityPage extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class CityPage extends Component {
   }
 
   listCities = async () => {
-    const result = await get("http://localhost:8086/city");
+    const result = await LIST_CITIES();
     if (result) {
       this.setState({
         cities: result
@@ -26,43 +26,13 @@ class CityPage extends Component {
     }
   };
 
-  getCityWeather = async cityId => {
-    const weatherData = await get(
-      "http://localhost:8086/weather/city/" + cityId
-    );
-    return (
-      <Toast>
-        <Toast.Header>
-          <p>Temperature is</p>
-        </Toast.Header>
-        <Toast.Body>
-          <p>
-            Temperature: {this.toCelsius(weatherData.cityStats.temperature)}
-          </p>
-          <p>
-            Maximum temperature:{" "}
-            {this.toCelsius(weatherData.cityStats.maximumTemperature)}
-          </p>
-          <p>
-            Minimum temperature:{" "}
-            {this.toCelsius(weatherData.cityStats.minimumTemperature)}
-          </p>
-        </Toast.Body>
-      </Toast>
-    );
-  };
-
-  toCelsius = number => {
-    return number + "°C";
-  };
-
-  removeCity = async id => {
+  removeCity = async cityId => {
     const { cities: data } = this.state;
-    await remove("http://localhost:8086/city/" + id);
+    await REMOVE_CITY(cityId);
 
     this.setState({
       cities: data.filter(city => {
-        return city.id !== id;
+        return city.id !== cityId;
       })
     });
   };
@@ -72,7 +42,7 @@ class CityPage extends Component {
       name: city.name,
       countryCode: city.countryCode
     };
-    const result = await post("http://localhost:8086/city", body);
+    const result = await CREATE_CITY(body);
 
     if (result) {
       this.setState({ cities: [...this.state.cities, result] });
@@ -83,7 +53,7 @@ class CityPage extends Component {
     const { cities: data } = this.state;
 
     return (
-      <Container>
+      <Container fluid={true}>
         <Row>
           <h1>City List</h1>
         </Row>
@@ -92,11 +62,7 @@ class CityPage extends Component {
         </Row>
         <CityForm handleSubmit={this.handleSubmit} />
         <br />
-        <CityTable
-          cityData={data}
-          removeCity={this.removeCity}
-          onClick={this.getCityWeather}
-        />
+        <CityTable cityData={data} removeCity={this.removeCity} />
       </Container>
     );
   }

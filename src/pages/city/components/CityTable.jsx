@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const TableHeader = () => {
   return (
@@ -16,9 +17,10 @@ const TableHeader = () => {
 const TableBody = props => {
   const rows = props.cityData.map(city => {
     return (
-      // <tr key={city.id} onClick={() => props.getCityWeather(city.id)}>
-      <tr key={city.id} onClick={() => props.getCityWeather(city.id)}>
-        <td>{city.name}</td>
+      <tr key={city.id}>
+        <Link to={"/city/" + city.id}>
+          <td>{city.name}</td>
+        </Link>
         <td>{city.countryCode}</td>
         <td>
           <button onClick={() => props.removeCity(city.id)}>Delete</button>
@@ -35,7 +37,7 @@ class CityTable extends Component {
     const { cityData, removeCity } = this.props;
 
     return (
-      <Table hover="true">
+      <Table hover={"true"}>
         <TableHeader />
         <TableBody cityData={cityData} removeCity={removeCity} />
       </Table>

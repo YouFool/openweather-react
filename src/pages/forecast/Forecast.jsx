@@ -13,21 +13,21 @@ class Forecast extends Component {
   }
 
   componentDidMount() {
-    const forecastUrl = ""; //TODO: service URL
-
-    fetch(forecastUrl)
-      // .then(result => result.json())
-      .then(result => {
-        this.setState({
-          forecast: result
-        });
-      });
+    // const forecastUrl = ""; //TODO: service URL
+    //
+    // fetch(forecastUrl)
+    //   .then(result => result.json())
+    //   .then(result => {
+    //     this.setState({
+    //       forecast: result
+    //     });
+    //   });
   }
 
   render() {
     //TODO: insert a <Forecast> component inside each <Col>
     return (
-      <Container>
+      <Container fluid={true}>
         <Row>
           <Col xs={3}>hey, i'm a xs-3 column</Col>
           <Col xs={3}>hey, i'm a xs-3 column</Col>
