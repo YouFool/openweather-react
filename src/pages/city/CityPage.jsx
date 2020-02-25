@@ -1,8 +1,8 @@
-import React, {Component} from "react";
-import {Container, Row} from "react-bootstrap";
+import React, { Component } from "react";
+import { Container, Row } from "react-bootstrap";
 import CityForm from "./components/CityForm";
 import CityTable from "./components/CityTable";
-import {CREATE_CITY, LIST_CITIES, REMOVE_CITY} from "./cityService";
+import { CREATE_CITY, LIST_CITIES, REMOVE_CITY } from "./cityService";
 
 class CityPage extends Component {
   constructor(props) {
@@ -42,10 +42,14 @@ class CityPage extends Component {
       name: city.name,
       countryCode: city.countryCode
     };
-    const result = await CREATE_CITY(body);
 
-    if (result) {
-      this.setState({ cities: [...this.state.cities, result] });
+    try {
+      const result = await CREATE_CITY(body);
+      if (result) {
+        this.setState({ cities: [...this.state.cities, result] });
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 

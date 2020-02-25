@@ -4,11 +4,13 @@ import {
   Col,
   Row,
   Accordion,
-  Spinner
+  Spinner,
+  Button
 } from "react-bootstrap";
 import DayForecast from "./components/DayForecast";
 import { GET_CITY_FORECAST } from "./forecastService";
 import dayjs from "dayjs";
+import { Link } from "react-router-dom";
 
 class Forecast extends Component {
   constructor(props) {
@@ -24,13 +26,13 @@ class Forecast extends Component {
     const cityId = this.props.match.params.cityId;
     const result = await GET_CITY_FORECAST(cityId);
     if (result) {
-      console.log("result", result);
       this.setState({ forecast: result });
     }
   };
 
   render() {
-    if (this.state.forecast.length === 0) {
+    const forecasts = this.state.forecast;
+    if (forecasts.length === 0) {
       return (
         <Container className={"text-center"}>
           <Spinner animation="border" variant="primary" />
@@ -45,16 +47,29 @@ class Forecast extends Component {
             <h1>Previsão do tempo</h1>
           </Col>
         </Row>
-        <Accordion defaultActiveKey="0">{this.renderDayForecasts()}</Accordion>
+        <Accordion defaultActiveKey={0}>
+          {this.renderDailyForecasts(forecasts)}
+        </Accordion>
+        <br />
+        <Button size={"lg"} variant="outline-primary">
+          <Link to="/">Voltar</Link>
+        </Button>
       </Container>
     );
   }
 
-  renderDayForecasts() {
+  renderDailyForecasts(forecasts) {
     const currentDate = dayjs();
 
-    return Array.from(Array(5)).map((_, i) => {
-      return <DayForecast eventKey={i} date={currentDate.add(i, "day")} />;
+    return forecasts.data.map((forecast, index) => {
+      return (
+        <DayForecast
+          key={index}
+          eventKey={index}
+          date={currentDate.add(index, "day")}
+          forecast={forecast}
+        />
+      );
     });
   }
 }

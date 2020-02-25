@@ -18,9 +18,11 @@ const TableBody = props => {
   const rows = props.cityData.map(city => {
     return (
       <tr key={city.id}>
-        <Link to={"/city/" + city.id}>
-          <td>{city.name}</td>
-        </Link>
+        <td>
+          <Link key={city.id} to={"/city/" + city.id}>
+            {city.name}
+          </Link>
+        </td>
         <td>{city.countryCode}</td>
         <td>
           <button onClick={() => props.removeCity(city.id)}>Delete</button>
